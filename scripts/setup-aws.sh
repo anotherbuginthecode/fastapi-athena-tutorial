@@ -38,7 +38,7 @@ aws iam create-role --role-name $IAM_ROLE --assume-role-policy-document '{
 
 aws iam attach-role-policy --role-name $IAM_ROLE --policy-arn arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
 
-aws iam put-role-policy --role-name $IAM_ROLE --policy-name  --policy-document '{
+aws iam put-role-policy --role-name $IAM_ROLE --policy-name $AWS_IAM_ROLE_GLUE_POLICY_NAME --policy-document '{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -54,17 +54,20 @@ aws iam put-role-policy --role-name $IAM_ROLE --policy-name  --policy-document '
     ]
 }'
 
+sleep 2 # sleep to allow aws to create the IAM ROLE correctly
+
 echo "📣 Creating database \"$GLUE_DATABASE\" in Glue"
-aws glue create-database --database-input Name=$GLUE_DATABASE
+aws glue create-database --database-input Name=$GLUE_DATABASE --region $AWS_REGION
 
 echo "📣 Creating the crawler \"$GLUE_CRAWLER\" in Glue"
 aws glue create-crawler --name $GLUE_CRAWLER \
   --role $(aws iam get-role --role-name $IAM_ROLE | jq -r '.Role.Arn') \
   --database-name $GLUE_DATABASE \
-  --targets '{"S3Targets": [{"Path": "s3://'"$S3BUCKET"'/database/movies/"}]}'
+  --targets '{"S3Targets": [{"Path": "s3://'"$S3BUCKET"'/database/movies/"}]}' \
+  --region $AWS_REGION
 
 echo "📣 Starting the crawler \"$GLUE_CRAWLER\""
-aws glue start-crawler --name $GLUE_CRAWLER
+aws glue start-crawler --name $GLUE_CRAWLER --region $AWS_REGION
 
 echo "📣 Creating a config.txt file. It will use to clean up the tutorial using the script clean-aws.sh"
 if [ -f "./config.txt" ]; then

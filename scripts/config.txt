@@ -1,0 +1,6 @@
+S3BUCKET=fastapi-athena-tutorial-3bc0e80e
+AWS_REGION=eu-west-1
+GLUE_DATABASE=fastapi-athena-tutorial-db
+GLUE_CRAWLER=fastapi-athena-tutorial-crawler
+IAM_ROLE=AWSGLUEServiceRole-FastAPIAthenaGlue-Tutorial
+AWS_IAM_ROLE_GLUE_POLICY_NAME=AWSGLUEServiceRole-FastAPIAthena-Tutorial-S3Policy
