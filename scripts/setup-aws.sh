@@ -6,7 +6,7 @@ TUTORIAL_NAME=fastapi-athena-tutorial
 S3BUCKET=$TUTORIAL_NAME-$(openssl rand -hex 4)
 GLUE_DATABASE=$TUTORIAL_NAME-db
 GLUE_CRAWLER=$TUTORIAL_NAME-crawler
-IAM_ROLE=AWSGLUServiceRole-FastAPIAthenaGlue-Tutorial
+IAM_ROLE=AWSGLUEServiceRole-FastAPIAthenaGlue-Tutorial
 
 echo "📣 Creating S3 bucket \"$S3BUCKET\" in $AWS_REGION"
 aws s3api create-bucket --bucket $S3BUCKET \
