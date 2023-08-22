@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # CLI ARGS
+AWS_REGION=$1
 TUTORIAL_NAME=fastapi-athena-tutorial
 S3BUCKET=$TUTORIAL_NAME-$(openssl rand -hex 4)
-AWS_REGION=$1
 GLUE_DATABASE=$TUTORIAL_NAME-db
 GLUE_CRAWLER=$TUTORIAL_NAME-crawler
 IAM_ROLE=AWSGLUServiceRole-FastAPIAthenaGlue-Tutorial
