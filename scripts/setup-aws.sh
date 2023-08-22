@@ -7,6 +7,7 @@ S3BUCKET=$TUTORIAL_NAME-$(openssl rand -hex 4)
 GLUE_DATABASE=$TUTORIAL_NAME-db
 GLUE_CRAWLER=$TUTORIAL_NAME-crawler
 IAM_ROLE=AWSGLUEServiceRole-FastAPIAthenaGlue-Tutorial
+AWS_IAM_ROLE_GLUE_POLICY_NAME=AWSGLUEServiceRole-FastAPIAthena-Tutorial-S3Policy
 
 echo "📣 Creating S3 bucket \"$S3BUCKET\" in $AWS_REGION"
 aws s3api create-bucket --bucket $S3BUCKET \
@@ -37,7 +38,7 @@ aws iam create-role --role-name $IAM_ROLE --assume-role-policy-document '{
 
 aws iam attach-role-policy --role-name $IAM_ROLE --policy-arn arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
 
-aws iam put-role-policy --role-name $IAM_ROLE --policy-name AWSGLUServiceRole-FastAPIAthena-Tutorial-S3Policy --policy-document '{
+aws iam put-role-policy --role-name $IAM_ROLE --policy-name  --policy-document '{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -75,8 +76,8 @@ S3BUCKET=$S3BUCKET
 AWS_REGION=$1
 GLUE_DATABASE=$TUTORIAL_NAME-db
 GLUE_CRAWLER=$TUTORIAL_NAME-crawler
-IAM_ROLE=AWSGLUServiceRole-FastAPIAthenaGlue-Tutorial
-IAM_POLICY_NAME=AWSGLUServiceRole-FastAPIAthena-Tutorial-S3Policy
+IAM_ROLE=$IAM_ROLE
+AWS_IAM_ROLE_GLUE_POLICY_NAME=$AWS_IAM_ROLE_GLUE_POLICY_NAME
 EOF
 
 echo "📣 Creating .env file in root folder. Fill the missing variables before start FastAPI."

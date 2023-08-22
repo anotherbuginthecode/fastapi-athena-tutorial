@@ -42,6 +42,6 @@ for policy_arn in $attached_policies; do
     aws iam detach-role-policy --role-name $IAM_ROLE --policy-arn $policy_arn
 done
 
-aws iam delete-role-policy --role-name $IAM_ROLE --policy-name $IAM_POLICY_NAME
+aws iam delete-role-policy --role-name $IAM_ROLE --policy-name $AWS_IAM_ROLE_GLUE_POLICY_NAME
 
 aws iam delete-role --role-name $IAM_ROLE
