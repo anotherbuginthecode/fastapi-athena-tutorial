@@ -17,7 +17,7 @@ fi
 
 
 echo "❌ Deleting S3 Bucket \"$S3BUCKET\""
-aws s3 rb s3://$S3BUCKET --force
+aws s3 rb s3://$S3BUCKET --force > /dev/null
 
 
 echo "❌ Deleting \"$GLUE_DATABASE\" database and tables in Glue"
