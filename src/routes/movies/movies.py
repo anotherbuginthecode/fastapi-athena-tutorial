@@ -17,8 +17,8 @@ router = APIRouter(
 
 
 @router.get("/metrics/top-10-movies-rotten")
-async def get_top_10_movies_rotten(filters: list[str] | None = None):
-    params_dict: dict = {"filters": filters}
+async def get_top_10_movies_rotten(filters: str | None = Query(None)):
+    params_dict: dict = {"filters": filters.split(",")}
     sql_file = os.path.join(ROOT_FOLDER, "src/sql/movies/get_top_10_movies_rotten.sql")
     query, _ = athena.query_builder(sql_file, params_dict)
     result = athena.execute(query=query)
@@ -36,7 +36,7 @@ async def avg_profitability_by_genres():
 
 
 @router.get("/metrics/studios-with-highest-profit")
-async def avg_profitability_by_genres():
+async def studios_with_highest_profit():
     sql_file = os.path.join(
         ROOT_FOLDER, "src/sql/movies/studios_with_highest_profits.sql"
     )

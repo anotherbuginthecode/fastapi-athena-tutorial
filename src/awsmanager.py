@@ -1,6 +1,5 @@
 import boto3
 import time
-from typing import TypedDict, Optional, List, Dict, Unpack
 import os
 from jinjasql import JinjaSql
 from dotenv import load_dotenv
