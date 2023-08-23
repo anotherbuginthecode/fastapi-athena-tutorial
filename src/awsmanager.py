@@ -26,7 +26,7 @@ class AWSAthena:
         except Exception as e:
             raise e
 
-    def query_builder(self, sql_file: str, params: dict):
+    def query_builder(self, sql_file: str, params: dict = {}):
         j = JinjaSql()
         if os.path.exists(sql_file):
             sql_template = open(sql_file).read()

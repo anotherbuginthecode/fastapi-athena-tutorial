@@ -16,28 +16,30 @@ router = APIRouter(
 )
 
 
-@router.get("")
-def get_movie_info(movie: str = None, filters: list[str] = Query(None)):
-    params: dict = {"table": "movies", "movie": movie, "filters": filters}
-    sql_file = os.path.join(ROOT_FOLDER, "src/sql/get_movie.sql")
-    query, params = athena.query_builder(sql_file, params)
-    result = athena.execute(query=query)
-    return result
-
-
-@router.get("/genre/{genre}")
-def get_movies_by_genre(genre: str, filters: list[str] | None = None):
-    params: dict = {"table": "movies", "genre": genre, "filters": filters}
-    sql_file = os.path.join(ROOT_FOLDER, "src/sql/get_movies_by_genre.sql")
-    query, params = athena.query_builder(sql_file, params)
-    result = athena.execute(query=query)
-    return result
-
-
 @router.get("/metrics/top-10-movies-rotten")
 async def get_top_10_movies_rotten(filters: list[str] | None = None):
-    params: dict = {"table": "movies", "filters": filters}
-    sql_file = os.path.join(ROOT_FOLDER, "src/sql/get_top_10_movies_rotten.sql")
-    query, params = athena.query_builder(sql_file, params)
+    params_dict: dict = {"filters": filters}
+    sql_file = os.path.join(ROOT_FOLDER, "src/sql/movies/get_top_10_movies_rotten.sql")
+    query, _ = athena.query_builder(sql_file, params_dict)
+    result = athena.execute(query=query)
+    return result
+
+
+@router.get("/metrics/avg-profitability-by-genres")
+async def avg_profitability_by_genres():
+    sql_file = os.path.join(
+        ROOT_FOLDER, "src/sql/movies/avg_profitability_by_genres.sql"
+    )
+    query, _ = athena.query_builder(sql_file)
+    result = athena.execute(query=query)
+    return result
+
+
+@router.get("/metrics/studios-with-highest-profit")
+async def avg_profitability_by_genres():
+    sql_file = os.path.join(
+        ROOT_FOLDER, "src/sql/movies/studios_with_highest_profits.sql"
+    )
+    query, _ = athena.query_builder(sql_file)
     result = athena.execute(query=query)
     return result
